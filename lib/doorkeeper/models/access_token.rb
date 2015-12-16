@@ -5,6 +5,7 @@ module Doorkeeper
     include Doorkeeper::Models::Revocable
     include Doorkeeper::Models::Accessible
     include Doorkeeper::Models::Scopes
+    include ActiveModel::MassAssignmentSecurity if defined?(::ProtectedAttributes)
 
     belongs_to :application, :class_name => "Doorkeeper::Application", :inverse_of => :access_tokens
 
@@ -13,7 +14,7 @@ module Doorkeeper
     validates :refresh_token, :uniqueness => true, :if => :use_refresh_token?
 
     attr_accessor :use_refresh_token
-    if ::Rails.version.to_i < 4 || defined?(ProtectedAttributes)
+    if ::Rails.version.to_i < 4 || defined?(::ProtectedAttributes)
       attr_accessible :application_id, :resource_owner_id, :expires_in, :scopes, :use_refresh_token
     end
 
