@@ -1,7 +1,6 @@
 module Doorkeeper
   class TokensController < ActionController::Metal
     include Helpers::Controller
-    include ActionController::RackDelegation
     include ActionController::Instrumentation
 
     def create
